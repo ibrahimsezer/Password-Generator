@@ -12,10 +12,13 @@ class _HashPasswordState extends State<HashPassword> {
   final TextEditingController _controller = TextEditingController();
   final TextEditingController _controllermaster = TextEditingController();
   final TextEditingController _controllerurl = TextEditingController();
+  final TextEditingController _confirmEmailController = TextEditingController();
+
   //Trigger for generating the hash code for the entered password
   bool password_hash_trigger = false;
   bool visible = true;
   String controllers = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,14 +39,21 @@ class _HashPasswordState extends State<HashPassword> {
                 hintText: 'Master Key',
               ),
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              onFieldSubmitted: (value) {
-                controllers = _controllermaster.text + _controllerurl.text;
-              },
+              onFieldSubmitted: (value) {},
             ),
             TextFormField(
               controller: _controllerurl,
               decoration: const InputDecoration(
                 hintText: 'URL',
+              ),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              onFieldSubmitted: (value) {},
+            ),
+            TextFormField(
+              autovalidateMode: AutovalidateMode.disabled,
+              controller: _confirmEmailController,
+              decoration: const InputDecoration(
+                hintText: 'Email',
               ),
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               onFieldSubmitted: (value) {},
@@ -79,8 +89,9 @@ class _HashPasswordState extends State<HashPassword> {
               ),
               onPressed: () {
                 setState(() {
-                  _controller.text =
-                      _controllermaster.text + _controllerurl.text;
+                  _controller.text = _controllermaster.text +
+                      _controllerurl.text +
+                      _confirmEmailController.text;
                   password_hash_trigger = true;
                 });
               },
